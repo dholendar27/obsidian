@@ -5,5 +5,5 @@
 - [[DNS]]
 - [[CDN]]
 ## Databases & Storage
-- [[System Design/Databases & Storage/Introduction|Introduction]]
+- [[System Design/Databases And Storage/Introduction|Introduction]]
 - [[Relational Database]]

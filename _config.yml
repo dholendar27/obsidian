@@ -6,36 +6,15 @@ url: "https://dholendar27.github.io/obsidian"
 theme: minima
 markdown: kramdown
 highlighter: rouge
-kramdown:
-  input: GFM
-  syntax_highlighter: rouge
 
 plugins:
   - jekyll-feed
   - jekyll-sitemap
 
-# Permalink settings to handle special characters
-permalink: /:categories/:title/
+# Simple permalink without special characters
+permalink: /:title/
 
-# Collections for your note folders
-collections:
-  dsa:
-    output: true
-    permalink: /:collection/:name/
-  python:
-    output: true
-    permalink: /:collection/:name/
-  docker:
-    output: true
-    permalink: /:collection/:name/
-  sql:
-    output: true
-    permalink: /:collection/:name/
-
-# Safe mode and encoding
-safe: false
-encoding: utf-8
-
+# Exclude everything except what we explicitly want
 exclude:
   - .obsidian/
   - Gemfile
@@ -43,18 +22,16 @@ exclude:
   - .gitignore
   - vendor/
   - node_modules/
-  - "*.gemspec"
-  - "*.gem"
   - .bundle/
   - .sass-cache/
   - .jekyll-cache/
   - gemfiles/
-  - "**/*&*"
-  - "**/*Class & Static Methods*"
+  - "**/*"
 
-# Include only markdown files and standard web assets
+# Only include specific files we want Jekyll to process
 include:
-  - "*.md"
-  - "*.html"
-  - "*.css"
-  - "*.js"
+  - index.md
+  - README.md
+
+# Disable collections for now to avoid URI issues
+collections: {}
