@@ -1,4 +1,4 @@
-There are Four Important data structures in the python which are most oftenly used. These data structures are used to store multiple values in a single variable. They are 
+There are Four Important data structures in the python which are most oftenly used. These datastructures are used to store multiple values in a single variable. They are 
 
 1. Lists
 2. Tuples
@@ -13,7 +13,7 @@ List are used to store multiple values of different types in a single variables.
 
 We have three different ways to add the data into the list
 
-1. Adding the list: we can add the data into list using the `append()` method.
+    1. Adding the list: we can add the data into list using the `append()` method.
 
 ```python
 new_list = []
@@ -106,7 +106,7 @@ tuple_1 = (1,2,3)
 tuple_1[1]
 ```
 
-    2. Concatenation: We can combine two tuples using `+` operator
+    2. Concatenation: We can combine two list using `+` operator
 
 ```python
 tuple_1 = (1,2,3)
