@@ -6,10 +6,16 @@ url: "https://dholendar27.github.io/obsidian"
 theme: minima
 markdown: kramdown
 highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
 
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+
+# Permalink settings to handle special characters
+permalink: /:categories/:title/
 
 # Collections for your note folders
 collections:
@@ -26,6 +32,10 @@ collections:
     output: true
     permalink: /:collection/:name/
 
+# Safe mode and encoding
+safe: false
+encoding: utf-8
+
 exclude:
   - .obsidian/
   - Gemfile
@@ -39,3 +49,12 @@ exclude:
   - .sass-cache/
   - .jekyll-cache/
   - gemfiles/
+  - "**/*&*"
+  - "**/*Class & Static Methods*"
+
+# Include only markdown files and standard web assets
+include:
+  - "*.md"
+  - "*.html"
+  - "*.css"
+  - "*.js"
