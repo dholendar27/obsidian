@@ -1,0 +1,33 @@
+title: My Knowledge Base
+description: Personal notes and documentation
+baseurl: ""
+url: "https://dholendar27.github.io/obsidian"
+
+theme: minima
+markdown: kramdown
+highlighter: rouge
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Collections for your note folders
+collections:
+  dsa:
+    output: true
+    permalink: /:collection/:name/
+  python:
+    output: true
+    permalink: /:collection/:name/
+  docker:
+    output: true
+    permalink: /:collection/:name/
+  sql:
+    output: true
+    permalink: /:collection/:name/
+
+exclude:
+  - .obsidian/
+  - Gemfile
+  - Gemfile.lock
+  - .gitignore
