@@ -1,28 +1,20 @@
----
-layout: default
-title: My Knowledge Base
----
-
 # My Knowledge Base
 
-Welcome to my personal collection of technical notes and documentation.
+Welcome to my personal knowledge base built with Obsidian and published using Quartz.
 
-## 📚 Contents
+## Contents
 
-### Programming & Development
-- **[Python](Python/)** - Python programming concepts and examples
-- **[Docker](Docker/)** - Containerization and Docker workflows
+- [[DSA/DSA|Data Structures & Algorithms]]
+- [[Python/Python|Python Programming]]
+- [[Docker/Docker|Docker]]
+- [[SQL/SQL|SQL]]
+- [[System Design/System Design|System Design]]
+- [[GenAI/GenAI|GenAI]]
 
-### Computer Science Fundamentals  
-- **[DSA](DSA/)** - Data Structures and Algorithms
-- **[SQL](SQL/)** - Database queries and concepts
+## Recent Notes
 
-### System Design & Architecture
-- **[System Design](System%20Design/)** - Scalable system architecture patterns
-
-### Emerging Technologies
-- **[GenAI](GenAI/)** - Generative AI and machine learning
+This site contains my personal notes and documentation on various technical topics. All notes are written in Obsidian and automatically published here.
 
 ---
 
-*These notes are continuously updated as I learn and explore new technologies.*
+*Last updated: {{date}}*
