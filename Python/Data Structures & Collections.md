@@ -13,7 +13,7 @@ List are used to store multiple values of different types in a single variables.
 
 We have three different ways to add the data into the list
 
-    1. Adding the list: we can add the data into list using the `append()` method.
+1. Adding the list: we can add the data into list using the `append()` method.
 
 ```python
 new_list = []
@@ -21,7 +21,7 @@ new_list.append(1)
 new_list.append("b")
 ```
 
-    1. Combining two list: we can combine list1 and list2 using the `extend()` method. 
+1. Combining two list: we can combine list1 and list2 using the `extend()` method. 
 
 ```python
 list_1 = [1,2,3,4,5]
@@ -29,7 +29,7 @@ list_2 = [6,7,8,9,0]
 list_1.extend(list_2) # the list_1 will be updated with the extended data
 ```
 
-    1. Inserting data at sepecific position: We can insert the data at the specific index using the `insert(index,value)` method.
+1. Inserting data at sepecific position: We can insert the data at the specific index using the `insert(index,value)` method.
 
 ```python
 fruits = ["apple",'mango','pineapple']
@@ -38,14 +38,14 @@ fruits.insert(1,"kiwi")
 
 list have three ways to delete the data
 
-    1. Remove value/item from the list: we can use the `remove(item)` method to remove the data
+1. Remove value/item from the list: we can use the `remove(item)` method to remove the data
 
 ```python
 list_1 = [1,2,3,4,5]
 list_1.remove(2) # it remove the value 2 in the list
 ```
 
-    1. Remove last values: We can use the `pop()` method to remove the last value of the list
+1. Remove last values: We can use the `pop()` method to remove the last value of the list
 
 ```python
 fruits = ["apple",'mango','pineapple']
@@ -62,21 +62,21 @@ fruits.clear()
 
 someother mostly used methods
 
-    1. Retrieve the index of the value: we can use the `index()` method to retrieve the index of the first occuring calue of the specified items
+1. Retrieve the index of the value: we can use the `index()` method to retrieve the index of the first occuring calue of the specified items
 
 ```python
 fruits = ["apple",'mango','pineapple',"apple"]
 fruits.index("apple") # provides the index "0" as is the appeared first in the search
 ```
 
-    1. Sort the elements in the list: we can use the `sort()`  method to arrange the value in ascending order.
+1. Sort the elements in the list: we can use the `sort()`  method to arrange the value in ascending order.
 
 ```python
 list_1 = [5,6,1,4,7,8,2,0]
 list_1.sort()
 ```
 
-    1. reverse the list: we can use the `reverse()` method to reverse all the values in the list.
+1. reverse the list: we can use the `reverse()` method to reverse all the values in the list.
 
 ```python
 fruits = ["apple",'mango','pineapple']
@@ -89,7 +89,7 @@ Tuples are also used to save the multiple values in the same variable. Tuple is 
 
 ### Operations
 
-    1. Creating a tuple: There are different ways to create tuples. 
+1. Creating a tuple: There are different ways to create tuples. 
 
 ```python
 tuple_1 = (1,2,3) # with values
@@ -133,7 +133,7 @@ set_1 = {1,2,3}
 set_2 = set()
 ```
 
-    2. Adding data: we can add the data into set using two different methods
+1. Adding data: we can add the data into set using two different methods
 
 ```python
 set_1.add(4) # we can use the `add()` method to single value
