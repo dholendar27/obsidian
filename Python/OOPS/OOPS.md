@@ -2,3 +2,5 @@
 - [[inheritance, Ploymorphism]]
 - [[Encapsulation]]
 - [[Class Methods vs Static Methods]]
+- [[Dunder Methods]]
+- [[Property]]
