@@ -1,4 +1,4 @@
 - [[Classes & Objects: Attributes, methods, __init__]]
-- [[multiple inheritance, method overriding]]
+- [[inheritance, Ploymorphism]]
 - [[Encapsulation]]
 - [[Class & Static Methods: @classmethod, @staticmethod]]

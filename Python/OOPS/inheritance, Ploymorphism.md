@@ -1,6 +1,6 @@
 ## Inheritance
 
-inheritance is a process of inhertering the attributes and methods from the another class (parent class)
+inheritance is a process of inheriting the attributes and methods from the another class (parent class)
 
 ```python
 class Animal:
@@ -70,9 +70,12 @@ Python uses the **Method Resolution Order (MRO)** to decide which method to call
 
 **Polymorphism** means **"many forms"** — the ability for a single interface or method to work differently depending on the object calling it.
 
-There are two main types of polymorphism
+>polymorphism means having the same method in the different objects. but when they are called they call the same method in different objects and each object will respond in its own way.
 
-1. Complie-time polymorphism
+**Example:** The objects are like donuts with similar shapes and methods are the fillings. each donut will have the filling. but the filling inside can be different every time.
+
+There are two main types of polymorphism
+### 1. Complie-time polymorphism
 
 This is also known as method overloading or operator overloading. It occurs when you have multiple methods with the same name but different parameters (number, type, or both). The compiler decides which method to invoke based on the method signature at compile time.
 
@@ -93,9 +96,10 @@ printer.print("Hello")  # This would call the method without the count argument
 printer.print("Hello", 3)  # This would call the method with the count argument
 ```
 
-2. Runtime polymorphism
+### 2. Runtime polymorphism
 
 This occurs when the method to be invoked is determined at runtime. It is usually achieved through **method overriding** where a subclass provides a specific implementation of a method already defined in its parent class.
+> Runtime polymorphism is all about deciding _which method_ to call for _which object_ while the program is running.
 
 ```python
 class Animal:
@@ -122,3 +126,10 @@ animal_speak(a)  # Outputs: Animal makes a sound
 animal_speak(d)  # Outputs: Dog barks
 animal_speak(c)  # Outputs: Cat meows
 ```
+
+---
+When we are using the polymorphism. we use the inheritance, where the child class inherit the parent class. so the child class can override the method from the parent class. when we call the method using the object create using the child class. the method in the child class is called. if not called from the parent class. 
+
+we can use the polymorphism without the inheritance that is called ==duck typing==. 
+- Duck typing enables polymorphism without requiring objects to explicitly inherit from a common superclass or implement a specific interface.
+- Instead, any object that implements the required methods or behaviors can be used interchangeably.

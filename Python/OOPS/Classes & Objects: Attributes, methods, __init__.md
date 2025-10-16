@@ -1,5 +1,8 @@
+---
+date created: 2025-10-16 10:17
+---
 
-Python is a object oriented programming language that allow developers to structure their code using classes and objects. 
+Python is a object oriented programming language that allow developers to structure their code using classes and objects.
 
 ## Classes
 
@@ -34,7 +37,7 @@ car1 = Car("Toyota", "Corolla", 2020)
 car2 = Car("Honda", "Civic", 2018)
 ```
 
-##  `__init__` 
+## `__init__`
 
 The `__init__` method is a special method in python classes. It is called a constuctor because it get called when the object is create. It intialized the attributes of the object, ensure the each object instance have the unique data
 

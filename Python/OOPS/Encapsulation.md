@@ -1,4 +1,4 @@
-Encapsulation is way to restrict object's components from direct access. which means that internal representation of an object is hidden from the outside. This is done to protect the interanal state and behavior
+Encapsulation is way to restrict object's components from direct access. which means that internal representation of an object is hidden from the outside. This is done to protect the internal state and behaviour
 
 We can implement the Encapsulation using
 
