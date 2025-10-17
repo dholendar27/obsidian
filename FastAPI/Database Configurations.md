@@ -1,4 +1,9 @@
-To create a database in FastAPI, we typically follow a series of steps that involve setting up the database connection, creating models to define the structure of the data, and then creating endpoints to interact with the data. 
+---
+date created: 2025-10-17 05:47
+---
+
+To create a database in FastAPI, we typically follow a series of steps that involve setting up the database connection, creating models to define the structure of the data, and then creating endpoints to interact with the data.
+
 ### Step 1: Install the Required Libraries
 
 First, we need to install FastAPI, Uvicorn (for the server), SQLAlchemy (for ORM), and a database driver (e.g., SQLite, PostgreSQL, etc.).
@@ -34,11 +39,8 @@ Base = declarative_base()
 ### Why are we doing this?
 
 - **`create_engine()`**: This establishes the connection to your database. The `DATABASE_URL` defines the type of database and its location (e.g., SQLite in this case).
-    
 - **`SessionLocal`**: This is the session we’ll use to interact with the database. It’s configured to ensure transactions happen as expected (e.g., no auto-commit).
-    
 - **`Base`**: This will be the base class for all your SQLAlchemy models, which makes it easier to create tables.
-    
 
 ### Step 3: Define Your Models
 
@@ -63,11 +65,8 @@ Base.metadata.create_all(bind=engine)
 ### Why are we doing this?
 
 - **`__tablename__`**: This tells SQLAlchemy what table in the database this class maps to.
-    
 - **`Column()`**: These define the columns in your table and their types. For example, `Integer` for numeric columns, `String` for text, and `Boolean` for true/false data.
-    
 - **`Base.metadata.create_all()`**: This command will create the actual tables in the database based on the models we’ve defined.
-    
 
 ### Step 4: Create Database Dependency
 
@@ -88,11 +87,8 @@ def get_db():
 ### Why are we doing this?
 
 - **`SessionLocal()`**: This creates a new session for every request to the database.
-    
 - **`yield db`**: This lets FastAPI know that this is a dependency, and we can inject the database session into our endpoints.
-    
 - **`db.close()`**: It’s important to close the database session when we're done to release resources.
-    
 
 ### Step 5: Create FastAPI Endpoints
 
@@ -135,17 +131,13 @@ def get_item(item_id: int, db: Session = Depends(get_db)):
 ### Why are we doing this?
 
 - **Pydantic models**: These are used to validate the data coming in (requests) and going out (responses). FastAPI automatically handles serialization to/from JSON for these models.
-    
+
 - **`create_item()`**: This endpoint creates a new item in the database.
-    
-    - **`db.add()`** adds the item to the session.
-        
-    - **`db.commit()`** commits the transaction to the database.
-        
-    - **`db.refresh()`** makes sure the object gets updated with the database-generated values (like the `id`).
-        
+  - **`db.add()`** adds the item to the session.
+  - **`db.commit()`** commits the transaction to the database.
+  - **`db.refresh()`** makes sure the object gets updated with the database-generated values (like the `id`).
+
 - **`get_item()`**: This fetches an item by its ID and returns it. If the item is not found, it raises a 404 error.
-    
 
 ### Step 6: Run the FastAPI Server
 
@@ -160,7 +152,6 @@ Here, `main` is the name of the Python file (without the `.py` extension), and `
 ### Why are we doing this?
 
 - **Uvicorn** is the ASGI server that will serve your FastAPI application. The `--reload` flag allows for automatic reloading during development.
-    
 
 ### Step 7: Testing the API
 
@@ -171,14 +162,9 @@ Now, you can test your API by going to `http://localhost:8000/docs`. This will o
 By following these steps, you've:
 
 1. **Installed necessary libraries** to use FastAPI with SQLAlchemy.
-    
 2. **Set up a database connection** using SQLAlchemy.
-    
 3. **Defined your database models** with the `Base` class.
-    
 4. **Created FastAPI endpoints** to interact with your database.
-    
 5. **Created a dependency for database sessions** to keep the database interactions modular and clean.
-    
 
 The steps you take in creating a database with FastAPI are modular, allowing for scalability and easy maintenance. You define the models for your data, configure how to interact with your database, and then expose this functionality through a fast API with clear and easy-to-use endpoints.
