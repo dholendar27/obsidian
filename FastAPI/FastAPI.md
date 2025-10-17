@@ -2,3 +2,5 @@
 [[FastAPI App]]
 [[Request Body and Response with Pydantic models]]
 [[Database Configurations]]
+[[Depends]]
+[[Lifespan]]
