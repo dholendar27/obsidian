@@ -2,10 +2,6 @@
 date created: 2025-10-16 18:11
 ---
 
-Sure, here's the explanation again without any emojis:
-
----
-
 ### 1. **Importing FastAPI**
 
 ```python
@@ -72,7 +68,8 @@ def read_item(item_id: int, q: str = None):
 
 - `@app.get("/items/{item_id}")`: Registers a GET route where `item_id` is a variable path parameter.
 - `item_id: int`: This path parameter is expected to be an integer. FastAPI will validate and convert the URL value to an integer automatically.
-- `q: str = None`: This is an optional query parameter. If not provided, it defaults to `None`.
+- `q: str = None`: This is an optional query parameter. If not provided, it defaults to `None`. 
+	Example: `/path?key=value`
 
 **Example Request:**
 
