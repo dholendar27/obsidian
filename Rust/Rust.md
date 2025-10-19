@@ -1,7 +1,7 @@
 
 ## 1. Foundations of Rust
 
-1.1 Introduction to Rust  
+1.1 [[Introduction to Rust]]  
  • What is Rust and its philosophy  
  • Setting up Rust (`rustup`, `cargo`, `rustc`)  
  • Understanding the compiler and `Cargo.toml`  
