@@ -2,13 +2,13 @@
 ## 1. Foundations of Rust
 
 1.1 [[Introduction to Rust]]  
- • What is Rust and its philosophy  
- • Setting up Rust (`rustup`, `cargo`, `rustc`)  
- • Understanding the compiler and `Cargo.toml`  
- • Basic program structure
+ - [x] What is Rust and its philosophy  
+ - [x] Setting up Rust (`rustup`, `cargo`, `rustc`)  
+ - [x] Understanding the compiler and `Cargo.toml`  
+ - [x] Basic program structure
 
 1.2 [[Syntax and Core Language ]] 
- • Variables and immutability  
+ - [x] Variables and immutability  
  • Data types and literals  
  • Operators and expressions  
  • Control flow (`if`, `match`, `loop`, `while`, `for`)
