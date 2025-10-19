@@ -7,7 +7,7 @@
  • Understanding the compiler and `Cargo.toml`  
  • Basic program structure
 
-1.2 Syntax and Core Language  
+1.2 [[Syntax and Core Language ]] 
  • Variables and immutability  
  • Data types and literals  
  • Operators and expressions  
