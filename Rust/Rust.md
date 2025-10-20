@@ -11,7 +11,7 @@
  - [x] Variables and immutability  
  - [x] Data types and literals  
  - [x] Operators and expressions  
- • [[Control flow]] (`if`, `match`, `loop`, `while`, `for`)
+ - [x] [[Control flow]] (`if`, `match`, `loop`, `while`, `for`)
 
 1.3 Ownership, Borrowing, and Lifetimes  
  • Ownership rules  
