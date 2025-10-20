@@ -1,6 +1,6 @@
 ---
 date created: 2025-10-19 15:23
-date updated: 2025-10-19 20:21
+date updated: 2025-10-20 10:17
 ---
 
 ## Variables and immutability
@@ -234,3 +234,38 @@ let y = {
 ```
 
 Note: Adding a semicolon turns an expression into a statement and discards the value.
+
+---
+
+## Strings
+
+A **string** is just some **text**, like `"hello"`, `"world"`, or `"Rust is awesome"`.
+Rust has two main types of strings:
+
+### String -> `owned`,`Growable Text`
+
+- The string literal `"hello"` is stored in the program’s **read-only memory** inside the binary (this is part of the program’s static data).
+- When you call `String::from("hello")`, Rust **copies** this `"hello"` data from the read-only memory into a new **block of memory on the heap**.
+- The variable `s` itself lives on the **stack**, but it contains:
+  - A **pointer** to the heap memory where `"hello"` is stored,
+  - The **length** of the string (5),
+  - And the **capacity** (how much memory is allocated, can be bigger than length).
+
+```rust
+let mut s = String::from("Hello");
+s.push_str(" world!");
+println!("{}", s); // Output: Hello world!
+```
+
+### &str -> `String Slice (Read-only)`
+```rust
+fn main() {
+    let greeting = "Hello, world!"; // &str
+    println!("{}", greeting);
+}
+```
+
+`"Hello, world!"` is a **string literal** stored in the program’s **read-only memory**.
+- The `&str` itself **does not own** the data.
+- And the data behind `&str` is **fixed size** and **not growable**.
+- You can only read from it, not change or grow it.
