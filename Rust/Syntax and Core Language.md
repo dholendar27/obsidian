@@ -1,6 +1,6 @@
 ---
 date created: 2025-10-19 15:23
-date updated: 2025-10-19 16:05
+date updated: 2025-10-19 20:21
 ---
 
 ## Variables and immutability
@@ -116,12 +116,121 @@ let first = tup.0; // 500
 ```
 
 #### Array
+
 A fixed-size collection of elements of the same type
 
-```rust 
+```rust
 let arr: [i32; 3] = [1, 2, 3];
 let first = arr[0]; // 1
 ```
 
 - Arrays are stack-allocated.
 - Use slices (`&[i32]`) for referencing parts of an array.
+
+## Operators and expressions
+
+Rust supports several types of operators:
+
+#### 1. **Arithmetic Operators**
+
+- `+` Addition
+- `-` Subtraction
+- `*` Multiplication
+- `/` Division
+- `%` Remainder (modulus)
+
+```rust
+let a = 10;
+let b = 3;
+let sum = a + b;        // 13
+let diff = a - b;       // 7
+let prod = a * b;       // 30
+let div = a / b;        // 3 (integer division)
+let rem = a % b;        // 1
+```
+
+---
+
+#### 2. **Comparison Operators**
+
+- `==` Equal to
+- `!=` Not equal to
+- `<` Less than
+- `>` Greater than
+- `<=` Less than or equal to
+- `>=` Greater than or equal to
+
+```rust
+let is_equal = a == b;  // false
+let less = a < b;       // false
+```
+
+---
+
+#### 3. **Logical Operators**
+
+- `&&` Logical AND
+- `||` Logical OR
+- `!` Logical NOT
+
+```rust
+let x = true;
+let y = false;
+let result = x && y;    // false
+let result2 = x || y;   // true
+let not_x = !x;         // false
+```
+
+---
+
+#### 4. **Bitwise Operators**
+
+- `&` Bitwise AND
+- `|` Bitwise OR
+- `^` Bitwise XOR
+- `<<` Left shift
+- `>>` Right shift
+
+```rust
+let x = 0b1010;         // 10 in decimal
+let y = 0b1100;         // 12 in decimal
+let and = x & y;        // 0b1000 (8)
+let or = x | y;         // 0b1110 (14)
+let xor = x ^ y;        // 0b0110 (6)
+let left_shift = x << 2;  // 0b101000 (40)
+```
+
+---
+
+#### 5. **Assignment Operators**
+
+- `=` Simple assignment
+
+- `+=`, `-=`, `*=`, `/=`, `%=` Compound assignment operators
+
+```rust
+let mut a = 5;
+a += 3;  // a = 8
+a *= 2;  // a = 16
+```
+
+---
+
+### Expressions in Rust
+
+- **Expressions** are chunks of code that evaluate to a value.
+- Most constructs in Rust are expressions.
+- Expressions do **not** include statements like `let` bindings or `return`.
+
+Example of expressions:
+
+```rust
+let x = 5 + 6;  // 5 + 6 is an expression resulting in 11
+
+let y = {
+    let a = 3;
+    a + 1        // The last expression without a semicolon is the block's value
+};
+```
+
+Note: Adding a semicolon turns an expression into a statement and discards the value.
