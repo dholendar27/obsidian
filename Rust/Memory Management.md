@@ -1,6 +1,6 @@
 ---
 date created: 2025-10-20 12:42
-date updated: 2025-10-20 16:38
+date updated: 2025-10-20 18:19
 ---
 
 ### 1. **Garbage Collected (GC) Languages**
@@ -162,4 +162,104 @@ When we create an variable with numbers or literals
 #### String (Heap Example)
 
 ![[dynamic_sized_values.png.png]]
-### Own
+
+### Ownership
+
+Ownership is Rust’s system for managing memory. Instead of using a garbage collector (like in Java or C#) or manual memory management (like in C or C++), Rust uses ownership rules to ensure memory safety and prevent bugs like dangling pointers, double frees, or memory leaks.
+
+---
+
+### The Core Ownership Rules in Rust
+
+Rust’s ownership system is based on three main rules:
+
+1. **Each value in Rust has a variable called its _owner_.**
+   This owner is responsible for the value.
+2. **There can only be one owner at a time.**\
+   When ownership of a value is transferred (moved) to another variable, the previous owner can no longer use the value.
+3. **When the owner goes out of scope, the value is dropped (memory is freed).**
+
+![[ownership_explanation.png]]
+
+### Borrowing
+
+In Rust, **borrowing** is a core concept of its ownership system. It allows you to refer to data without taking ownership of it. This is crucial for enabling safe and efficient memory management without needing a garbage collector.
+
+---
+
+### What is Borrowing?
+
+Borrowing is when a variable **temporarily allows another variable to use its data** without giving up ownership.
+
+There are two types of borrowing:
+
+1. **Immutable borrow** (`&T`): Read-only access.
+2. **Mutable borrow** (`&mut T`): Read-write access.
+
+---
+
+### Why Do We Borrow?
+
+Borrowing allows:
+- Multiple parts of code to access data **safely**.
+- Avoiding unnecessary data copying or moving.
+- Enforcing at compile-time that data **cannot be simultaneously mutated and read**, which prevents bugs like data races.
+
+---
+
+### Rules of Borrowing
+
+Rust enforces strict rules to maintain memory safety:
+
+1. **You can have either:**
+   - Any number of **immutable** references (`&T`), or
+   - **One mutable** reference (`&mut T`)
+   - **But not both at the same time.**
+   This prevents conflicting accesses.
+
+1. **References must not outlive the data they refer to.**
+   - Rust uses **lifetimes** to ensure this.
+   - A borrowed reference becomes invalid if the original data is dropped.
+
+1. **Borrowing is scoped.**
+   - Once a reference goes out of scope, a new borrow (mutable or immutable) can be made.
+   - Example:
+
+     ```rust
+     let mut x = 5;
+     {
+         let r1 = &x; // immutable borrow
+         println!("{}", r1);
+     } // r1 goes out of scope here
+     let r2 = &mut x; // now mutable borrow is allowed
+     *r2 += 1;
+     ```
+
+---
+
+### Example
+
+```rust
+fn main() {
+    let mut s = String::from("hello");
+
+    let r1 = &s; // immutable borrow
+    let r2 = &s; // another immutable borrow
+    println!("{}, {}", r1, r2);
+
+    // let r3 = &mut s; // ERROR: cannot borrow as mutable while immutably borrowed
+
+    // Correct way:
+    let r3 = &mut s; // now a mutable borrow is allowed after r1 and r2 are done
+    r3.push_str(" world");
+    println!("{}", r3);
+}
+```
+
+---
+
+### Summary
+
+- Borrowing is how you use data without taking ownership.
+- It enables safe access to memory.
+- Rust enforces borrowing rules at compile time to prevent bugs like data races or dangling references.

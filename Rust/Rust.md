@@ -14,7 +14,7 @@
  - [x] [[Control flow]] (`if`, `match`, `loop`, `while`, `for`)
 
 1.3 [[Memory Management]]
- • Ownership rules  
+ - [x] Ownership rules  
  • Borrowing and mutable references  
  • Lifetimes and annotations  
  - [x] Stack vs Heap  
