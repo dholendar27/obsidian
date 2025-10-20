@@ -1,5 +1,6 @@
 ---
 date created: 2025-10-20 12:42
+date updated: 2025-10-20 14:20
 ---
 
 ### 1. **Garbage Collected (GC) Languages**
@@ -103,3 +104,28 @@ fn makes_copy(some_integer: i32) {
 
 - Steep learning curve due to ownership/borrowing rules.
 - Complex lifetimes can be tricky in advanced cases.
+
+## Memory Management in Rust
+
+Rust achieve the memory management using the
+
+1. Mutability
+2. Heap and memory
+3. Ownership model
+4. Borrowing and references
+5. lifetime
+
+### Mutability
+
+In Rust the variables are always immutable. once the variable is created the we cannot add or update the values as they are immutable. We can explicitly make the variable mutable by adding the `mut` keyword before the variable
+
+```rust
+fn main() { 
+	let mut x: i32 = 1; 
+	x = 2; // No error println!("{}", x); 
+}
+```
+
+In the rust all the variables are immutable because
+1. Immutable data is inherently thread-safe because if no thread can alter the data, then no synchronization is needed when data is accessed concurrently.
+2. Knowing that certain data will not change allows the compiler to optimize code better.

@@ -16,7 +16,7 @@
 1.3 Ownership, Borrowing, and Lifetimes  
  • Ownership rules  
  • Borrowing and mutable references  
- • Lifetimes and annotations  
+ •  
  • Stack vs Heap  
  • Move and Copy semantics
 
