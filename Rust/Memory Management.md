@@ -1,6 +1,6 @@
 ---
 date created: 2025-10-20 12:42
-date updated: 2025-10-20 14:20
+date updated: 2025-10-20 16:38
 ---
 
 ### 1. **Garbage Collected (GC) Languages**
@@ -127,13 +127,16 @@ fn main() {
 ```
 
 In the rust all the variables are immutable because
+
 1. Immutable data is inherently thread-safe because if no thread can alter the data, then no synchronization is needed when data is accessed concurrently.
 2. Knowing that certain data will not change allows the compiler to optimize code better.
 
 ### Stack vs. Heap Allocation
- Rust  has clear rules about stack and heap data management.
- - stack: Fast allocation and deallocation. Rust uses the stack for most primitive data types and for data where the size is known at compile time
- - Heap: Used for data that can grow at runtime, such as vectors or strings.
+
+Rust  has clear rules about stack and heap data management.
+
+- stack: Fast allocation and deallocation. Rust uses the stack for most primitive data types and for data where the size is known at compile time
+- Heap: Used for data that can grow at runtime, such as vectors or strings.
 
 #### Stack:
 
@@ -146,11 +149,17 @@ In the rust all the variables are immutable because
 
 - The **heap** is used for **dynamically sized data** or data where the size is not known at compile time.
 - Examples are:
-    - `String` (the actual string data is stored on the heap; the `String` object on the stack contains a pointer, length, and capacity)
-    - `Vec<T>` (a growable array; its elements are stored on the heap)
-    - `Box<T>` (a smart pointer that allocates data on the heap)
+  - `String` (the actual string data is stored on the heap; the `String` object on the stack contains a pointer, length, and capacity)
+  - `Vec<T>` (a growable array; its elements are stored on the heap)
+  - `Box<T>` (a smart pointer that allocates data on the heap)
 - Heap allocation is slower than stack allocation because it requires managing memory (allocation and deallocation).
 
 Example:
 When we create an variable with numbers or literals
-![[stackExample.png]]
+
+![[static_sized_values.png]]
+
+#### String (Heap Example)
+
+![[dynamic_sized_values.png.png]]
+### Own

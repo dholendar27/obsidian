@@ -13,11 +13,11 @@
  - [x] Operators and expressions  
  - [x] [[Control flow]] (`if`, `match`, `loop`, `while`, `for`)
 
-1.3 Ownership, Borrowing, and Lifetimes  
+1.3 [[Memory Management]]
  • Ownership rules  
  • Borrowing and mutable references  
- •  
- • Stack vs Heap  
+ • Lifetimes and annotations  
+ - [x] Stack vs Heap  
  • Move and Copy semantics
 
 1.4 Functions and Modules  
