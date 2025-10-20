@@ -15,14 +15,14 @@
 
 1.3 [[Memory Management]]
  - [x] Ownership rules  
- • Borrowing and mutable references  
+ - [x] Borrowing and mutable references  
  • Lifetimes and annotations  
  - [x] Stack vs Heap  
  • Move and Copy semantics
 
-1.4 Functions and Modules  
- • Defining functions and return values  
- • Expressions vs statements  
+1.4 [[Functions and Modules ]] 
+ - [x] Defining functions and return values  
+ - [x] Expressions vs statements  
  • Modules and visibility (`mod`, `pub`, `use`)  
  • Crate structure and `super` keyword
 
