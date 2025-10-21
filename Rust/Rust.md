@@ -28,7 +28,7 @@
 
 1.5 [[Data Structures]]  
  - [x] Structs (tuple, unit, named)  
- • Enums and pattern matching  
+ - [x] Enums and pattern matching  
  • Arrays, tuples, and slices  
  • Strings (`String` vs `&str`)  
  • Collections (`Vec`, `HashMap`, `HashSet`, etc.)
