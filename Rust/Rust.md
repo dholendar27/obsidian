@@ -23,11 +23,11 @@
 1.4 [[Functions and Modules ]] 
  - [x] Defining functions and return values  
  - [x] Expressions vs statements  
- • Modules and visibility (`mod`, `pub`, `use`)  
+ - [x] Modules and visibility (`mod`, `pub`, `use`)  
  • Crate structure and `super` keyword
 
-1.5 Data Structures  
- • Structs (tuple, unit, named)  
+1.5 [[Data Structures]]  
+ - [x] Structs (tuple, unit, named)  
  • Enums and pattern matching  
  • Arrays, tuples, and slices  
  • Strings (`String` vs `&str`)  

@@ -215,7 +215,7 @@ Rust allows you to create modules in separate files, which can then be reference
 
 ---
 
-### **Step 1: Project Structure**
+#### Step 1: Project Structure
 
 Consider a Rust project with the following structure:
 
@@ -229,15 +229,13 @@ src/
 Here:
 
 - `main.rs` will be the entry point of the program (the main file).
-    
 - `calculator.rs` and `geometry.rs` will contain the logic for different modules.
-    
 
 ---
 
-### **Step 2: Creating the Modules in Separate Files**
+#### Step 2: Creating the Modules in Separate Files
 
-#### `calculator.rs` (Module file for `calculator`):
+##### `calculator.rs` (Module file for `calculator`):
 
 ```rust
 // calculator.rs
@@ -252,7 +250,7 @@ pub fn subtract(a: i32, b: i32) -> i32 {
 
 In this file, we define a **module** called `calculator`. The functions `add` and `subtract` are marked with `pub`, making them **public** and accessible from outside this module.
 
-#### `geometry.rs` (Module file for `geometry`):
+##### `geometry.rs` (Module file for `geometry`):
 
 ```rust
 // geometry.rs
@@ -269,11 +267,11 @@ Here, we define a **module** called `geometry`, which contains functions to calc
 
 ---
 
-### **Step 3: Linking the Modules in `main.rs`**
+#### Step 3: Linking the Modules in `main.rs`
 
 Now that we have separate files for each module (`calculator.rs` and `geometry.rs`), we need to **link** them to `main.rs` so we can use the functions defined in them.
 
-#### `main.rs` (The entry point of the application):
+##### `main.rs` (The entry point of the application):
 
 ```rust
 // main.rs
@@ -298,25 +296,18 @@ fn main() {
 In `main.rs`:
 
 - We use the `mod` keyword to declare the modules (`calculator` and `geometry`).
-    
 - After declaring the modules, we can use the functions from these modules like `calculator::add` and `geometry::area_of_circle`.
-    
-
-### **How Does It Work?**
+#### How Does It Work?
 
 1. The `mod calculator;` and `mod geometry;` lines tell Rust to look for files named `calculator.rs` and `geometry.rs` in the same directory as `main.rs` and treat them as modules.
-    
 2. The `pub` keyword in `calculator.rs` and `geometry.rs` makes the functions available for use outside of their respective modules.
-    
 3. In `main.rs`, we access the functions by prefixing them with the module name (`calculator::add` or `geometry::area_of_circle`).
-    
 
 ---
 
-### **Step 4: Organizing Large Modules with Submodules**
+#### Step 4: Organizing Large Modules with Submodules
 
 As your project grows, you might want to organize large modules into **submodules**. You can do this by creating directories and adding `mod.rs` files inside them.
-
 For example, let's say you have a `shapes` module with multiple submodules for different shapes:
 
 ```
@@ -374,23 +365,15 @@ fn main() {
 ### How It Works:
 
 - The `shapes/mod.rs` file acts as the entry point for the `shapes` module. It declares the submodules `circle` and `rectangle` as public.
-    
 - In `main.rs`, you can now access the functions from both `shapes::circle` and `shapes::rectangle`.
-    
 
----
+## `use`
+In Rust, the `use` keyword is used to bring items (functions, structs, modules, etc.) into scope so that you can use them without having to refer to their full path each time. It’s similar to `import` in other languages like Python or JavaScript.
 
-### **Summary of Using Files for Modules in Rust:**
+### Why Use `use`?
 
-1. **Create separate files for each module**: This helps organize large projects.
-    
-2. **Use the `mod` keyword**: To declare the module inside your main file or another module.
-    
-3. **Public items**: Use `pub` to expose functions or structs outside the module.
-    
-4. **Submodules**: You can use directories with a `mod.rs` file to create nested or hierarchical modules.
-    
+Without `use`, you'd have to reference every item with its full path, which can be cumbersome. `use` allows you to shorten the path, making your code cleaner and more readable.
 
-This file-based module system allows you to keep your codebase clean, organized, and maintainable.
-
-Let me know if you want further clarification or more advanced examples!
+```rust
+use module_name::item_name;
+```
