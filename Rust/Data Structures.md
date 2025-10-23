@@ -551,3 +551,125 @@ If you need sorted keys, use `BTreeMap`.
 |`keys()` / `values()`|Iterators over keys/values|
 |`entry(key)`|Access or insert default value|
 |`clear()`|Empties the map|
+
+---
+
+## Vectors
+
+### What is a Vector in Rust?
+
+A **vector** (`Vec<T>`) is a **growable, heap-allocated** collection of elements of the same type `T`. Unlike arrays, whose size is fixed at compile time, vectors can grow or shrink at runtime.
+
+### Key characteristics:
+
+- Stores elements contiguously in memory.
+- Allows random access to elements by index.
+- Supports push/pop operations.
+- Uses heap allocation to store elements, allowing dynamic size.
+
+---
+
+### How to Create a Vector
+
+#### 1. Using `Vec::new()`
+
+```rust
+let mut v: Vec<i32> = Vec::new();
+v.push(1);
+v.push(2);
+v.push(3);
+```
+
+You need `mut` because you want to mutate the vector by pushing elements.
+
+#### 2. Using the `vec!` Macro
+
+```rust
+let v = vec![1, 2, 3, 4];
+```
+
+This creates a vector initialized with those values.
+
+---
+
+### Accessing Elements
+
+You can access elements by index:
+
+```rust
+let third = v[2]; // indexing starts at 0
+println!("The third element is {}", third);
+```
+
+But be careful! Indexing out of bounds will cause a **panic at runtime**.
+
+Alternatively, use `.get()` which returns an `Option`:
+
+```rust
+match v.get(2) {
+    Some(third) => println!("Third element is {}", third),
+    None => println!("There is no third element."),
+}
+```
+
+---
+
+### Modifying Vectors
+
+#### Adding Elements
+
+- `.push(element)` — adds element to the end.
+    
+- `.insert(index, element)` — inserts element at a specific index.
+    
+
+Example:
+
+```rust
+v.push(5);
+v.insert(1, 10);
+```
+
+#### Removing Elements
+
+- `.pop()` — removes and returns the last element (returns `Option<T>`).
+    
+- `.remove(index)` — removes element at index and shifts others.
+    
+
+Example:
+
+```rust
+let last = v.pop();
+let second = v.remove(1);
+```
+
+---
+
+### Iterating Over Vectors
+
+You can iterate over vectors easily:
+
+```rust
+for i in &v {
+    println!("{}", i);
+}
+```
+
+- `&v` iterates over references to elements (`&T`).
+- `v.iter_mut()` gives mutable references for modification.
+    
+
+---
+
+### Memory and Performance
+
+- Vectors allocate memory on the heap.
+- They manage capacity internally — they allocate extra space to avoid reallocating on every push.
+- When capacity is exceeded, the vector allocates a larger buffer and copies elements over.
+- You can check or set capacity:
+
+```rust
+println!("Capacity: {}", v.capacity());
+v.reserve(10); // pre-allocate space for 10 more elements
+```
