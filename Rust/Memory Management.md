@@ -263,3 +263,61 @@ fn main() {
 - Borrowing is how you use data without taking ownership.
 - It enables safe access to memory.
 - Rust enforces borrowing rules at compile time to prevent bugs like data races or dangling references.
+
+---
+
+## Move and Clone
+### Move Semantics
+
+In Rust, some types are **moved** by default when assigned or passed to a function.
+
+#### Example:
+
+```rust
+fn main() {
+    let s1 = String::from("hello"); // s1 owns the string
+    let s2 = s1;                     // ownership moves to s2
+    // println!("{}", s1);           // ERROR: s1 is no longer valid
+    println!("{}", s2);              // works
+}
+```
+
+**Explanation:**
+
+- `String` is stored on the **heap**.
+- Assigning `s1` to `s2` moves the ownership — no deep copy is made.
+- Rust prevents you from using `s1` after the move to avoid **double free** errors.
+
+---
+
+#### Why Some Types Move Automatically
+
+- **Heap-allocated types** like `String`, `Vec<T>` move by default.
+- **Stack-only types** like integers (`i32`, `u8`) are **Copy types**, so they are copied instead of moved.
+
+```rust
+let x = 5;
+let y = x; // x is copied, still usable
+println!("{}", x); //works
+```
+
+---
+
+### Cloning
+
+If you want **two independent owners** of a heap value, you can explicitly **clone** it:
+
+```rust
+fn main() {
+    let s1 = String::from("hello");
+    let s2 = s1.clone(); // deep copy
+    println!("{}", s1);  // works
+    println!("{}", s2);  // works
+}
+```
+
+**Key points:**
+
+- `clone()` creates a **deep copy** of the heap data.
+- Moves are **cheap** (just transfer ownership, no heap allocation).
+- Clones are **expensive** (allocate new memory, copy all data).
