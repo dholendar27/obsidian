@@ -55,3 +55,82 @@ fn main() {
 - If the division is valid, we return `Some(result)`.
 - If invalid, we return `None`.
 - The `match` statement forces us to handle _both cases_ — no chance of runtime panic due to a missing value.
+---
+## Error Handling
+### What is Error Handling?
+
+When you write a program, sometimes things go wrong — like trying to open a file that doesn’t exist, or dividing by zero. Error handling is how your program deals with these problems without crashing.
+
+---
+
+### How Does Rust Handle Errors?
+
+Rust has a **safe and clear way** to handle errors. It mainly uses **two types** of errors:
+
+1. **Recoverable errors** — errors that your program can fix or handle, like “file not found.”
+2. **Unrecoverable errors** — serious problems that usually mean your program must stop, like bugs.
+    
+
+---
+
+#### 1. Recoverable Errors — The `Result` Type
+
+Rust uses a special type called `Result` to handle recoverable errors.
+
+- `Result<T, E>` is an **enum** (a kind of special type with two possibilities):
+    - `Ok(T)` — means success, with a value of type `T`.
+    - `Err(E)` — means failure, with an error of type `E`.
+
+Example:
+
+```rust
+fn divide(a: i32, b: i32) -> Result<i32, String> {
+    if b == 0 {
+        Err(String::from("Cannot divide by zero"))
+    } else {
+        Ok(a / b)
+    }
+}
+```
+
+Here, the function returns:
+
+- `Ok(result)` if division works,
+- `Err("Cannot divide by zero")` if `b` is zero.
+
+You **handle** the `Result` by checking if it’s `Ok` or `Err` using:
+- `match` expressions
+- Helper methods like `.unwrap()`, `.expect()`, `.unwrap_or()`, `.map()`, `.and_then()`, etc.
+
+Example of using `match`:
+
+```rust
+match divide(10, 2) {
+    Ok(value) => println!("Result is {}", value),
+    Err(e) => println!("Error: {}", e),
+}
+```
+
+---
+
+#### 2. Unrecoverable Errors — The `panic!` Macro
+
+Sometimes, something is so wrong that the program can’t continue safely. Rust uses `panic!` to stop execution immediately.
+
+Example:
+
+```rust
+panic!("Something went terribly wrong!");
+```
+
+When your program panics, it prints an error message and exits.
+
+---
+
+#### Why is Rust’s Error Handling Special?
+
+- Rust **forces** you to handle errors explicitly. You can’t ignore them silently.
+- This makes your programs **more reliable** and **safe**.
+- It prevents many bugs that happen when errors are ignored.
+
+---
