@@ -320,3 +320,325 @@ if let Some(x) = some_value { ... }
 - Always cover all cases (or use `_` for a catch-all).
 - Be cautious with `match` on enums if new variants might be added in the future.
 - Prefer `if let` for simpler, one-pattern matches to avoid unnecessary verbosity.
+
+---
+
+## What Is a HashMap in Rust?
+
+A **`HashMap`** in Rust is a collection type that stores **key-value pairs**, where each _key_ must be unique, and each _value_ is associated with one key.
+
+It is part of Rust’s standard library:
+
+```rust
+use std::collections::HashMap;
+```
+
+Conceptually, it’s similar to:
+
+- **Python’s `dict`**
+- **Java’s `HashMap`**
+- **C++’s `unordered_map`**
+
+---
+
+## Internal Mechanics
+
+At its core, a `HashMap` uses a **hash function** to map keys to _buckets_ in memory. When you insert or access a key, Rust:
+
+1. Computes the hash of the key.
+2. Finds the corresponding bucket.
+3. Stores or retrieves the key-value pair.
+
+Rust’s `HashMap` uses **SipHash**, a cryptographically strong hash function designed to prevent _hash flooding attacks_ (i.e., denial-of-service via collisions).
+
+---
+
+## Basic Usage
+
+### 1. Creating a HashMap
+
+```rust
+use std::collections::HashMap;
+
+fn main() {
+    let mut scores = HashMap::new();
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Red"), 50);
+
+    println!("{:?}", scores);
+}
+```
+
+- `HashMap::new()` creates an empty map.
+- `.insert(key, value)` adds entries.
+- The keys and values must have the **same type** throughout the map.
+> [!important]+ Important
+> A `HashMap<K, V>` **stores keys and values by ownership** — meaning:
+>- It owns its keys and values internally.
+>- When you insert a key, you give up ownership of that key.
+
+
+---
+
+### 2. Accessing Values
+
+```rust
+let team_name = String::from("Blue");
+let score = scores.get(&team_name);
+
+match score {
+    Some(value) => println!("Score: {}", value),
+    None => println!("No score found"),
+}
+```
+
+- `.get(&key)` returns an `Option<&V>` (`Some(&value)` or `None`).
+    
+- You must pass a _reference_ to the key.
+    
+
+You can also use `unwrap_or` to simplify:
+
+```rust
+let score = scores.get(&team_name).unwrap_or(&0);
+```
+
+---
+
+### 3. Iterating
+
+You can iterate over keys and values:
+
+```rust
+for (key, value) in &scores {
+    println!("{}: {}", key, value);
+}
+```
+
+---
+
+## 🧱 Updating a HashMap
+
+### 1. Overwriting a Value
+
+If you insert a key that already exists, the old value is replaced:
+
+```rust
+scores.insert(String::from("Blue"), 25);
+```
+
+Now "Blue" has a new value.
+
+---
+
+### 2. Inserting Only If Absent
+
+`.entry()` + `.or_insert()` is a powerful pattern:
+
+```rust
+scores.entry(String::from("Yellow")).or_insert(30);
+scores.entry(String::from("Blue")).or_insert(50);
+```
+
+- If the key doesn’t exist, insert the provided value.
+    
+- If it exists, do nothing.
+    
+- Returns a mutable reference to the value.
+    
+
+---
+
+### 3. Updating Based on the Old Value
+
+You can modify existing values directly through `.entry()`:
+
+```rust
+let text = "hello world wonderful world";
+let mut map = HashMap::new();
+
+for word in text.split_whitespace() {
+    let count = map.entry(word).or_insert(0);
+    *count += 1;
+}
+println!("{:?}", map);
+```
+
+This counts word frequency — a common idiom in Rust.
+
+---
+
+##  Ownership and Borrowing Rules
+
+This is where Rust’s memory model shines (and can trip up newcomers).
+
+### Keys and Values Are Moved Into the Map
+
+```rust
+let name = String::from("Alice");
+let mut map = HashMap::new();
+map.insert(name, 10);
+
+// println!("{}", name); ❌ Error! name was moved into the HashMap
+```
+
+- When you insert an owned type (like `String`), ownership moves.
+    
+- If you need to keep using the variable, insert a **reference** instead.
+    
+
+---
+
+### Borrowing Keys When Accessing
+
+When you do `map.get(&key)`, you borrow the key (`&K`), not move it.
+
+The same goes for iteration (`for (k, v) in &map`).
+
+---
+
+## ⚡ Performance and Capacity
+
+### 1. Default Hasher
+
+Rust’s standard `HashMap` uses **SipHash** for security (against collision attacks).  
+However, it’s not the fastest. For performance-critical code, use **`hashbrown`** or **`fxhash`**:
+
+```toml
+# In Cargo.toml
+[dependencies]
+hashbrown = "0.14"
+```
+
+Then:
+
+```rust
+use hashbrown::HashMap;
+```
+
+### 2. Reserving Capacity
+
+If you know how many elements you’ll insert, preallocate:
+
+```rust
+let mut map = HashMap::with_capacity(100);
+```
+
+This avoids reallocations.
+
+---
+
+## 🔒 HashMap vs BTreeMap
+
+|Feature|HashMap|BTreeMap|
+|---|---|---|
+|Ordering|Unordered|Sorted by key|
+|Performance|O(1) average|O(log n)|
+|Memory locality|Worse|Better|
+|Hashing|Yes|No|
+
+If you need sorted keys, use `BTreeMap`.
+
+---
+
+## 🧰 Common Methods
+
+|Method|Description|
+|---|---|
+|`insert(key, val)`|Adds or updates a key-value pair|
+|`get(&key)`|Retrieves a value (Option<&V>)|
+|`remove(&key)`|Removes an entry|
+|`contains_key(&key)`|Checks for existence|
+|`keys()` / `values()`|Iterators over keys/values|
+|`entry(key)`|Access or insert default value|
+|`clear()`|Empties the map|
+
+---
+
+## 🧩 Example: Frequency Counter
+
+```rust
+use std::collections::HashMap;
+
+fn main() {
+    let text = "hello world wonderful world";
+    let mut word_count = HashMap::new();
+
+    for word in text.split_whitespace() {
+        *word_count.entry(word).or_insert(0) += 1;
+    }
+
+    for (word, count) in &word_count {
+        println!("{}: {}", word, count);
+    }
+}
+```
+
+Output:
+
+```
+hello: 1
+world: 2
+wonderful: 1
+```
+
+---
+
+## 🧪 Example: Custom Struct as Key
+
+If you use custom types as keys, they must implement:
+
+- `Eq`
+    
+- `Hash`
+    
+
+Example:
+
+```rust
+use std::collections::HashMap;
+
+#[derive(Hash, Eq, PartialEq, Debug)]
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let mut map = HashMap::new();
+    map.insert(Point { x: 1, y: 2 }, "A");
+    map.insert(Point { x: 3, y: 4 }, "B");
+
+    println!("{:?}", map.get(&Point { x: 1, y: 2 }));
+}
+```
+
+---
+
+## 🚨 Common Pitfalls
+
+1. **Forgetting Ownership Transfer**
+    
+    - `String` and `Vec` get moved into the map.
+        
+2. **Relying on Order**
+    
+    - HashMaps are **unordered** — iteration order is not stable.
+        
+3. **Hash Collisions**
+    
+    - Rare, but can affect performance (mitigated by SipHash).
+        
+
+---
+
+## 🧩 Summary
+
+|Concept|Description|
+|---|---|
+|Collection Type|Key–Value pairs|
+|Complexity|Average O(1) lookup/insert|
+|Keys|Must implement `Eq` + `Hash`|
+|Values|Any type|
+|Ordering|Unordered|
+|Safe Concurrency|Use `std::sync::Mutex<HashMap<…>>` or `dashmap`|
