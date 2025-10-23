@@ -37,7 +37,7 @@
 
 ## 2. Intermediate Rust
 
-2.1 Error Handling  
+2.1 [[Error Handling]]  
  • `Result<T, E>` and `Option<T>`  
  • The `?` operator  
  • Custom error types  
