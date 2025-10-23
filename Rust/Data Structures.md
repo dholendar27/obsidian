@@ -393,15 +393,20 @@ match score {
 ```
 
 - `.get(&key)` returns an `Option<&V>` (`Some(&value)` or `None`).
-    
 - You must pass a _reference_ to the key.
-    
 
 You can also use `unwrap_or` to simplify:
 
 ```rust
 let score = scores.get(&team_name).unwrap_or(&0);
 ```
+
+> [!important]+ Important
+> 
+> - The keys **are owned by the `HashMap`** (moved into it when you insert).
+> - When you want to look something up, instead of moving (giving ownership of) the key **again**, you just **borrow** it with a reference (`&key`).
+> - This lets the `HashMap` look up the value _without taking ownership_ of the key you’re using to query.
+
 
 ---
 
@@ -417,7 +422,7 @@ for (key, value) in &scores {
 
 ---
 
-## 🧱 Updating a HashMap
+## Updating a HashMap
 
 ### 1. Overwriting a Value
 
@@ -441,11 +446,8 @@ scores.entry(String::from("Blue")).or_insert(50);
 ```
 
 - If the key doesn’t exist, insert the provided value.
-    
 - If it exists, do nothing.
-    
 - Returns a mutable reference to the value.
-    
 
 ---
 
@@ -479,25 +481,22 @@ let name = String::from("Alice");
 let mut map = HashMap::new();
 map.insert(name, 10);
 
-// println!("{}", name); ❌ Error! name was moved into the HashMap
+// println!("{}", name); Error! name was moved into the HashMap
 ```
 
 - When you insert an owned type (like `String`), ownership moves.
-    
 - If you need to keep using the variable, insert a **reference** instead.
-    
 
 ---
 
 ### Borrowing Keys When Accessing
 
 When you do `map.get(&key)`, you borrow the key (`&K`), not move it.
-
 The same goes for iteration (`for (k, v) in &map`).
 
 ---
 
-## ⚡ Performance and Capacity
+## Performance and Capacity
 
 ### 1. Default Hasher
 
@@ -528,7 +527,7 @@ This avoids reallocations.
 
 ---
 
-## 🔒 HashMap vs BTreeMap
+## HashMap vs BTreeMap
 
 |Feature|HashMap|BTreeMap|
 |---|---|---|
@@ -541,7 +540,7 @@ If you need sorted keys, use `BTreeMap`.
 
 ---
 
-## 🧰 Common Methods
+## Common Methods
 
 |Method|Description|
 |---|---|
@@ -552,93 +551,3 @@ If you need sorted keys, use `BTreeMap`.
 |`keys()` / `values()`|Iterators over keys/values|
 |`entry(key)`|Access or insert default value|
 |`clear()`|Empties the map|
-
----
-
-## 🧩 Example: Frequency Counter
-
-```rust
-use std::collections::HashMap;
-
-fn main() {
-    let text = "hello world wonderful world";
-    let mut word_count = HashMap::new();
-
-    for word in text.split_whitespace() {
-        *word_count.entry(word).or_insert(0) += 1;
-    }
-
-    for (word, count) in &word_count {
-        println!("{}: {}", word, count);
-    }
-}
-```
-
-Output:
-
-```
-hello: 1
-world: 2
-wonderful: 1
-```
-
----
-
-## 🧪 Example: Custom Struct as Key
-
-If you use custom types as keys, they must implement:
-
-- `Eq`
-    
-- `Hash`
-    
-
-Example:
-
-```rust
-use std::collections::HashMap;
-
-#[derive(Hash, Eq, PartialEq, Debug)]
-struct Point {
-    x: i32,
-    y: i32,
-}
-
-fn main() {
-    let mut map = HashMap::new();
-    map.insert(Point { x: 1, y: 2 }, "A");
-    map.insert(Point { x: 3, y: 4 }, "B");
-
-    println!("{:?}", map.get(&Point { x: 1, y: 2 }));
-}
-```
-
----
-
-## 🚨 Common Pitfalls
-
-1. **Forgetting Ownership Transfer**
-    
-    - `String` and `Vec` get moved into the map.
-        
-2. **Relying on Order**
-    
-    - HashMaps are **unordered** — iteration order is not stable.
-        
-3. **Hash Collisions**
-    
-    - Rare, but can affect performance (mitigated by SipHash).
-        
-
----
-
-## 🧩 Summary
-
-|Concept|Description|
-|---|---|
-|Collection Type|Key–Value pairs|
-|Complexity|Average O(1) lookup/insert|
-|Keys|Must implement `Eq` + `Hash`|
-|Values|Any type|
-|Ordering|Unordered|
-|Safe Concurrency|Use `std::sync::Mutex<HashMap<…>>` or `dashmap`|
