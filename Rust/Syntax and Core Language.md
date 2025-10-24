@@ -269,3 +269,11 @@ fn main() {
 - The `&str` itself **does not own** the data.
 - And the data behind `&str` is **fixed size** and **not growable**.
 - You can only read from it, not change or grow it.
+---
+## String Literals
+
+- Written directly in code using double quotes, e.g., `"Hello"`.
+- Stored in the **data segment** (read-only memory in the compiled binary).
+- Immutable and have **`'static` lifetime** (exist for the entire program).
+- Multiple uses of the same literal point to the **same memory location** (interning). 
+- Accessed via `&'static str` references; **no heap allocation** occurs.
