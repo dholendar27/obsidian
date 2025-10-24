@@ -44,7 +44,7 @@
  • Using `thiserror`, `anyhow`, `eyre`  
  • Recoverable vs unrecoverable errors
 
-2.2 Traits and Generics  
+2.2 [[Traits and Generics]]
  • Defining and implementing traits  
  • Trait bounds and generics  
  • Associated types and `where` clauses  
