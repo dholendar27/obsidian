@@ -673,3 +673,143 @@ for i in &v {
 println!("Capacity: {}", v.capacity());
 v.reserve(10); // pre-allocate space for 10 more elements
 ```
+
+---
+
+## Iterator
+### What Is an Iterator?
+
+An **iterator** in Rust is **any type that implements the `Iterator` trait**:
+
+```rust
+pub trait Iterator {
+    type Item;
+
+    fn next(&mut self) -> Option<Self::Item>;
+}
+```
+
+- Each call to `next()` returns an `Option<Item>`:
+    - `Some(item)` for the next element
+    - `None` when the iteration is finished
+
+You rarely call `next()` directly — instead, you use methods like `.map()`, `.filter()`, `.collect()`, etc.
+
+---
+
+### `iter()`, `iter_mut()`, and `into_iter()`
+
+These three methods determine **how you iterate** over a collection (especially slices or vectors).
+
+Let’s take an example:
+
+```rust
+let v = vec![1, 2, 3];
+```
+
+#### 1. `iter()` → Immutable references
+
+```rust
+for x in v.iter() {
+    println!("{}", x); // x: &i32
+}
+```
+
+- **Type**: `Iter<'_, T>` (iterator over `&T`)
+- **Does not consume** the collection.
+- You can still use `v` after the loop.
+
+ Use when you just need to **read** elements.
+
+---
+
+#### 2. `iter_mut()` → Mutable references
+
+```rust
+let mut v = vec![1, 2, 3];
+for x in v.iter_mut() {
+    *x += 1;
+}
+println!("{:?}", v); // [2, 3, 4]
+```
+
+- **Type**: `IterMut<'_, T>` (iterator over `&mut T`)
+- Allows you to **mutate** the elements in place.
+- Does **not consume** the collection.
+
+ Use when you need to **modify** elements.
+
+---
+
+#### 3. `into_iter()` → Takes ownership
+
+```rust
+let v = vec![1, 2, 3];
+for x in v.into_iter() {
+    println!("{}", x); // x: i32
+}
+```
+
+- **Type**: `IntoIter<T>` (iterator over `T`)
+- **Consumes** the collection — `v` is moved and can’t be used after.
+- Ownership of each element is transferred into the loop.
+
+ Use when you want to **consume** the collection or move elements out.
+
+---
+
+###  Special case for arrays
+
+For arrays (not vectors), `into_iter()` used to behave differently before Rust 1.53 — it now works consistently:
+
+```rust
+let arr = [1, 2, 3];
+for x in arr.into_iter() {
+    println!("{}", x);
+}
+```
+
+This moves the array elements, similar to a vector.
+
+---
+
+##  Consuming vs Non-Consuming Adapters
+
+Iterators can be **chained** using _adapters_ — methods that transform or consume them.
+
+---
+
+### 1. **Non-consuming adapters**
+
+These **produce a new iterator**, leaving the original unconsumed (until you actually iterate).
+
+Examples:
+
+```rust
+let v = vec![1, 2, 3];
+let iter = v.iter()
+    .map(|x| x * 2)
+    .filter(|x| *x > 2);
+```
+
+- `map`, `filter`, `take`, `skip`, etc.
+    
+- They **return a new iterator**, and no data is processed until you call something that **consumes** it.
+    
+
+---
+
+### 2. **Consuming adapters**
+
+These **consume** the iterator to produce a value.
+
+Examples:
+
+```rust
+let v = vec![1, 2, 3];
+
+let sum: i32 = v.iter().sum();         // Consumes the iterator
+let collected: Vec<_> = v.iter().collect(); // Collects into a Vec
+```
+
+Other examples: `.count()`, `.find()`, `.all()`, `.any()`, `.fold()`, `.for_each()`, etc.
