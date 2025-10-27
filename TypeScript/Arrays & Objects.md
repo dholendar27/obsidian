@@ -195,4 +195,69 @@ let emp: Employee = { name: "Alice", email: "alice@mail.com" };
 ```
 
 ## Enums
-Even are the addition feature to the typescript
+
+Enums are a **TypeScript feature** that allows you to define a set of named constants. They make your code more readable and maintainable compared to using plain numbers or strings.
+
+#### Syntax Example:
+
+```ts
+enum Direction {
+  Up,
+  Down,
+  Left,
+  Right
+}
+```
+
+Here:
+
+- `Direction.Up` is `0`
+- `Direction.Down` is `1`
+- `Direction.Left` is `2`
+- `Direction.Right` is `3`
+
+TypeScript **automatically assigns numeric values starting from 0** unless you specify them.
+
+---
+
+### Numeric Enums with Custom Values:
+
+```ts
+enum StatusCode {
+  Success = 200,
+  NotFound = 404,
+  ServerError = 500
+}
+```
+
+---
+
+### String Enums:
+
+```ts
+enum Color {
+  Red = "RED",
+  Green = "GREEN",
+  Blue = "BLUE"
+}
+```
+
+---
+
+### Key Features of Enums:
+
+1. **Improved readability** – Instead of remembering numbers or strings, you use descriptive names.
+2. **Auto-incremented values** – Numeric enums auto-increment if you don’t set the value explicitly.
+3. **Reverse mapping** – Numeric enums allow you to get the name from the value:
+    
+
+```ts
+enum Direction {
+  Up = 1,
+  Down,
+  Left,
+  Right
+}
+
+console.log(Direction[2]); // Output: Down
+```
