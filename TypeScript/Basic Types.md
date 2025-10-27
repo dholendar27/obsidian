@@ -1,5 +1,6 @@
 ---
 date created: 2025-10-27 12:14
+date updated: 2025-10-27 12:26
 ---
 
 ## 1. `number`
@@ -26,7 +27,7 @@ Whenever you work with arithmetic, percentages, or measurements.
 ## 2. `string`
 
 Used to represent textual data.
-You can use **single (`'`)**, **double (`"`)**, or **template literals (\`\`\`)**.
+You can use **single (`'`)**, **double (`"`)**, or **template literals (```)**.
 
 ### Example
 
@@ -106,7 +107,7 @@ Use `any` **only when necessary**, as it defeats TypeScript’s purpose of catch
 
 ## 6. `unknown`
 
-`unknown` is similar to `any`, but **safer** — you must check its type before using it.
+`unknown` is similar to `any`, but **safer** — you must check its type before using it. We can't use the unknown without type checking it.
 
 ### Example
 
@@ -114,7 +115,7 @@ Use `any` **only when necessary**, as it defeats TypeScript’s purpose of catch
 let value: unknown = "Hello TypeScript";
 
 if (typeof value === "string") {
-  console.log(value.toUpperCase()); // ✅ Safe after check
+  console.log(value.toUpperCase()); // Safe after check
 }
 ```
 
@@ -125,8 +126,6 @@ When dealing with external data (like API responses) where you don’t know the 
 ---
 
 ## 7. `void`
-
-### Description
 
 Represents the **absence of a return value**, typically used for functions that don’t return anything.
 
@@ -148,10 +147,19 @@ Used for event handlers, logging, or other side-effect functions.
 
 ## 8. `never`
 
-### Description
-
-Indicates that a function **never returns**.\
+Indicates that a function **never returns**.
 This could be because it always **throws an error** or **loops forever**.
+
+> [!note] Note
+> A function with a return type of never cannot have a reachable end point.
+>
+> This means the function will never successfully return to the caller.
+> The function either:
+>
+> - Throws an error, or
+> - Runs forever (infinite loop).
+>
+> If TypeScript detects that a function could reach the end normally, it will throw a type error if its return type is never.
 
 ### Example
 
@@ -175,8 +183,6 @@ Used for exhaustive type checking or functions that can’t logically reach an e
 
 ## 9. `symbol`
 
-### Description
-
 Introduced in ES6 — symbols are unique and immutable identifiers, often used as object keys to avoid name collisions.
 
 ### Example
@@ -195,8 +201,6 @@ Used in advanced cases — e.g., hiding internal object properties or implementi
 ---
 
 ## 10. `bigint`
-
-### Description
 
 Represents **very large integers** beyond the safe range of JavaScript’s `number` type (`2^53 - 1`).
 
