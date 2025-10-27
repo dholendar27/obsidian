@@ -2,3 +2,4 @@
 ### Basics
 - [[TypeScript/Introduction|Introduction]]
 - [[Basic Types]]
+- [[Arrays & Objects]]
