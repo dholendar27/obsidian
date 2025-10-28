@@ -32,10 +32,10 @@ In **Amazon Web Services (AWS)**, **Compute Services** provide the processing po
 
 ---
 
-### 3. Amazon ECS (Elastic Container Service)
+### 3. [[Amazon ECS (Elastic Container Service)]]
 
-**What it is:** A container orchestration service for running Docker containers.\
-**Use case:** Microservices and containerized applications.\
+**What it is:** A container orchestration service for running Docker containers.
+**Use case:** Microservices and containerized applications.
 **Key features:**
 
 - Integrates with EC2 or AWS Fargate.
