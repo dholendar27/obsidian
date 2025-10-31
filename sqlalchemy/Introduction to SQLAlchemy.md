@@ -303,7 +303,7 @@ with Session(engine) as session:
 
 ---
 
-## ⚡ Common Pitfalls
+## Common Pitfalls
 
 1. Creating sessions but never closing them (causes memory/connection leaks).\
    Always use `with` or `try/finally` to manage lifecycle.
@@ -312,3 +312,105 @@ with Session(engine) as session:
 3. Forgetting to `commit()` after adding or updating objects.\
    SQLAlchemy uses **transactional semantics** — nothing is saved until commit.
 
+---
+## Session
+## 1. The `sessionmaker` Factory
+
+we created sessions manually like:
+
+```python
+with Session(engine) as session:
+```
+
+That’s fine for scripts, but in **real applications** (like FastAPI or Flask backends), we often need to create sessions repeatedly — for each request or background job.
+
+That’s where **`sessionmaker`** comes in — it’s a **factory** that creates new session instances bound to an engine.
+
+```python
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+engine = create_engine("sqlite:///example.db", echo=True)
+
+# Create a session factory
+SessionLocal = sessionmaker(bind=engine)
+
+# Create a session
+session = SessionLocal()
+```
+
+Now `SessionLocal()` returns a **new independent session** every time.  
+This makes it safe to use in multi-threaded or multi-request environments.
+
+---
+
+## 2. Typical Pattern in Real Projects
+
+You’ll often see something like this in backend apps:
+
+```python
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
+
+DATABASE_URL = "sqlite:///example.db"
+
+engine = create_engine(DATABASE_URL, echo=True)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+Base = declarative_base()
+```
+
+and then in your app code:
+
+```python
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+```
+
+ In **FastAPI**, this `get_db()` is used as a dependency so that each request gets its own database session — safe and isolated.
+
+---
+
+## 3. Session Lifecycle: Commit, Rollback, and Flush
+
+Let’s explore what really happens when you interact with the session.
+
+```python
+with Session(engine) as session:
+    new_user = User(name="Alice")
+    session.add(new_user)
+
+    # No SQL yet — only pending in memory
+    session.flush()   # Now SQLAlchemy sends INSERT to DB (but not committed)
+    
+    session.commit()  # Commit makes it permanent in the database
+```
+
+### Breakdown:
+
+- `add()` → adds to pending state.
+- `flush()` → sends SQL to DB but still inside transaction.
+- `commit()` → commits the transaction and ends it.
+- `rollback()` → cancels the transaction, undoing uncommitted changes.
+
+If any error occurs (like a constraint violation), **you must rollback** before making new queries with the same session.
+
+---
+
+## 4. Thread Safety & Scoped Sessions
+
+In multithreaded environments (like web servers), you shouldn’t share one session globally.  
+Instead, you use **scoped sessions**:
+
+```python
+from sqlalchemy.orm import scoped_session, sessionmaker
+
+SessionLocal = scoped_session(sessionmaker(bind=engine))
+```
+
+Each thread/request gets its **own session**, safely isolated.  
+You can later call `SessionLocal.remove()` to clean up after the request.

@@ -5,8 +5,8 @@
     - 1.1 Installation and Setup
     - 1.2 Core vs. ORM Layer
     - 1.3 Database Connection and Session Management
-2. **Defining Models**
-    
+
+2. **[[Defining Models]]**
     - 2.1 ORM Mapping (Python Classes to Database Tables)
     - 2.2 Column Types and Constraints
     - 2.3 Model Inheritance Techniques
