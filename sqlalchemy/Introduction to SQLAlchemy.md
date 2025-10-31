@@ -1,5 +1,6 @@
 ---
 date created: 2025-10-31 10:31
+date updated: 2025-10-31 12:01
 ---
 
 ## 1.1 — Installation and Setup
@@ -93,16 +94,32 @@ The database file (`example.db`) is created **only when you first execute an act
 
 ```
 +--------------------------------------------+
-| 1️⃣ You call create_engine()                |
+| 1️ You call create_engine()                |
 +--------------------------------------------+
        |
        v
-🧱 Engine object created
-   (contains DB URL, dialect info, connection pool setup)
-   but ❌ no actual DB connection yet.
+	Engine object created
+	(contains DB URL, dialect info, connection pool setup)
+	but no actual DB connection yet.
 
 ```
 
 ---
 
 ## Core vs ORM Layer
+
+SQLAlchemy is designed with two powerful layers:
+
+![[ORM vs Core.png]]
+## The Core Layer
+
+The **Core** is SQLAlchemy’s _foundation_.  
+It’s a **SQL abstraction toolkit**, not just an ORM backend.
+
+It lets you:
+
+- Define tables programmatically
+- Write SQL expressions in Python
+- Execute them efficiently
+
+Essentially, you get **full SQL control**, but without writing raw strings.
