@@ -11,27 +11,24 @@
     - 2.2 Column Types and Constraints
     - 2.3 Model Inheritance Techniques
         
-3. **Establishing Relationships**
-    
+3. **[[Establishing Relationships]]**
     - 3.1 Foreign Key Constraints
     - 3.2 Relationship Types (One-to-Many, Many-to-One, Many-to-Many)
     - 3.3 Using `relationship` and `backref`
     - 3.4 Cascading Options (Save, Delete, etc.)
         
 4. **Querying the Database (CRUD Operations)**
-    
+
     - 4.1 Basic Queries: `session.query()`, `filter()`, `all()`
     - 4.2 Joins and Relationships in Queries
     - 4.3 Advanced Querying: Aggregations, Subqueries, and Grouping
     - 4.4 Transactions: Committing, Rolling Back, and Flushing
         
 5. **Session Management**
-    
     - 5.1 Managing Sessions and Transactions
     - 5.2 Multi-threading and Session Scoping
     - 5.3 Lazy vs. Eager Loading
     - 5.4 Bulk Inserts and Updates
-        
 6. **Database Migrations with Alembic**
     
     - 6.1 Setting Up Alembic in Your Project

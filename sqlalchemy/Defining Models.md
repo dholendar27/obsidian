@@ -126,69 +126,6 @@ Table('users', MetaData(), Column('id', INTEGER(), table=<users>, primary_key=Tr
 |Separate models into `models.py`|Keeps your code organized|
 |Use SQLAlchemy 2.0 type hints for new projects|Cleaner, future-proof|
 
----
-## 1. Defining Columns — Recap
-
-Columns describe what each field in your model looks like in the database.
-
-Example:
-
-```python
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, func
-from sqlalchemy.orm import declarative_base
-
-Base = declarative_base()
-
-class User(Base):
-    __tablename__ = "users"
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(50), nullable=False)
-    email = Column(String(100), unique=True, nullable=False)
-    is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-```
-
----
-
-## 2. Common SQLAlchemy Column Types
-
-|Type|Description|Example|
-|---|---|---|
-|`Integer`|Integer numbers|`Column(Integer)`|
-|`String(length)`|Text (varchar)|`Column(String(50))`|
-|`Text`|Large text|`Column(Text)`|
-|`Boolean`|True/False|`Column(Boolean)`|
-|`Date`, `DateTime`|Dates/timestamps|`Column(DateTime)`|
-|`Float`, `Numeric`|Decimal numbers|`Column(Float)`|
-|`Enum`|Fixed set of values|`Column(Enum('A', 'B', 'C'))`|
-|`JSON`|JSON objects (for supported DBs)|`Column(JSON)`|
-|`LargeBinary`|Binary data|`Column(LargeBinary)`|
-
-### Example:
-
-```python
-from sqlalchemy import Float, Text, Enum, JSON
-import enum
-
-class ProductType(enum.Enum):
-    FOOD = "food"
-    ELECTRONICS = "electronics"
-    BOOKS = "books"
-
-class Product(Base):
-    __tablename__ = "products"
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String(100), nullable=False)
-    price = Column(Float, nullable=False)
-    category = Column(Enum(ProductType), nullable=False)
-    description = Column(Text)
-    metadata = Column(JSON)  # optional metadata field
-```
-
----
-
 ## 3. Constraints in Columns
 
 ### Primary Key
