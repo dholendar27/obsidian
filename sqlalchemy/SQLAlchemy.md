@@ -17,7 +17,7 @@
     - 3.3 Using `relationship` and `backref`
     - 3.4 Cascading Options (Save, Delete, etc.)
         
-4. **Querying the Database (CRUD Operations)**
+4. **[[Querying the Database]] (CRUD Operations)**
 
     - 4.1 Basic Queries: `session.query()`, `filter()`, `all()`
     - 4.2 Joins and Relationships in Queries
