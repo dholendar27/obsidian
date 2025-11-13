@@ -1,1 +1,1 @@
-[[MongoDB/Introduction|Introduction]]
+[[Introduction to MongoDB|Introduction to MongoDB]]
