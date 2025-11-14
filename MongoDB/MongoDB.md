@@ -48,7 +48,7 @@
 
 ---
 
-### **6. Indexing**
+### **6. [[Indexing]]**
 
 - What are Indexes?
 - Types of Indexes (Single Field, Compound, Multikey, Text, Geospatial, etc.)
