@@ -122,13 +122,9 @@ In this case, all the customer’s information is stored directly in the `orders
 #### Use **Denormalization** when:
 
 - You have a **read-heavy** application, where performance and fast query response times are a priority.
-    
 - You are querying documents frequently and need to **reduce the number of joins** (or multiple queries) to improve performance.
-    
 - Your data structure is relatively **static** (i.e., doesn’t change frequently) or the cost of updating redundant data is acceptable.
-    
 - You need to **simplify queries** and improve developer productivity by reducing the need for multiple lookups.
-    
 
 ---
 
