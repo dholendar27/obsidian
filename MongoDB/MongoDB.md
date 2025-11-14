@@ -71,24 +71,17 @@
 ### **8. Transactions & Atomic Operations**
 
 - What is a Transaction?
-    
 - Multi-Document Transactions (Replica Sets & Sharded Clusters)
-    
 - Write Concerns and Read Concerns
-    
 - Session Management
-    
 
 ---
 
 ### **9. Data Replication**
 
 - Replica Set Overview
-    
 - Members, Elections, and Failover
-    
 - Read/Write Operations in Replica Sets
-    
 - Backup & Recovery
     
 
@@ -97,13 +90,9 @@
 ### **10. Sharding (Horizontal Scaling)**
 
 - Why Sharding?
-    
 - Shard Keys
-    
 - Config Servers, Query Routers, and Shards
-    
 - Balancing & Chunk Splitting
-    
 - Common Sharding Patterns
     
 
