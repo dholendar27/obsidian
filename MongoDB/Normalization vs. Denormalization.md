@@ -10,7 +10,7 @@ Let’s go into detail on both concepts, including when and why you would choose
 
 ### **Normalization in MongoDB**
 
-Normalization is the process of structuring your data in a way that minimizes redundancy and maintains consistency by organizing data into separate collections (or tables in the case of relational databases). The goal is to store each piece of information only once and link related data through references.
+==Normalization is the process of structuring your data in a way that minimizes redundancy and maintains consistency by organizing data into separate collections (or tables in the case of relational databases).== The goal is to store each piece of information only once and link related data through references.
 
 #### Key Concepts:
 
