@@ -1,6 +1,6 @@
 ---
 date created: 2025-12-02 14:04
-date updated: 2025-12-02 14:28
+date updated: 2025-12-02 14:51
 ---
 
 ## What is WebSocket?
@@ -417,3 +417,206 @@ createWebSocket();
 
 - If your WebSocket connection has been idle for a long time, some servers or network infrastructure (e.g., firewalls) may close it automatically. To prevent this, you can send periodic **ping** frames to keep the connection alive.
 
+---
+
+## WebSocket Security
+
+WebSocket connections are powerful because they enable real-time communication between clients and servers. However, because WebSockets can be persistent and open for long periods, ensuring their security is critical to prevent data breaches, attacks, and other vulnerabilities. Let's go through some of the key **security considerations** when using WebSockets.
+
+---
+
+### 1. Using `wss://` (WebSocket Secure) vs `ws://` (Insecure)
+
+Just like **HTTP** has **HTTPS**, WebSockets have **`ws://`** and **`wss://`**:
+
+- **`ws://`** (WebSocket - Insecure):
+  - This is the non-secure version of WebSockets. It does not provide encryption, which means the data is sent in plaintext over the network.
+  - Using `ws://` is **not recommended for production** environments, especially for applications where sensitive information is exchanged (e.g., login data, payment information).
+- **`wss://`** (WebSocket Secure):
+
+  - This is the secure version of WebSockets, just like HTTPS. It encrypts the data using **SSL/TLS**, providing a secure communication channel between the client and server.
+  - **Always use `wss://`** in production environments, especially when transmitting sensitive data, to prevent eavesdropping, tampering, and man-in-the-middle (MITM) attacks.
+
+#### **Why Use `wss://`?**
+
+- Encryption: Protects data from being intercepted by unauthorized parties (e.g., via MITM attacks).
+- Authentication: Ensures the server is authenticated (just like HTTPS).
+- Data Integrity: Ensures that data sent over the connection cannot be tampered with by third parties.
+
+---
+
+### 2. Handling Cross-Origin Requests (CORS for WebSocket)
+
+Cross-Origin Resource Sharing (CORS) is a mechanism that allows or restricts web applications running at one origin to request resources from a different origin. WebSockets don't use the same CORS model as HTTP requests, but **they can still be affected** by security measures regarding cross-origin requests.
+
+- **WebSocket CORS policy**: WebSocket servers **don’t have a direct CORS policy** like HTTP servers. However, the server can decide whether to accept a WebSocket connection from a different origin.
+
+  - **Origins** are set by the browser, which sends an `Origin` header when initiating a WebSocket connection.
+  - The WebSocket server can check the `Origin` header and decide whether to allow the connection.
+
+#### **Example:**
+
+A WebSocket server can inspect the `Origin` header to accept connections only from trusted domains:
+
+```javascript
+// WebSocket server (e.g., Node.js with ws library)
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ port: 8080 });
+
+wss.on('connection', (ws, req) => {
+  const origin = req.headers.origin;
+
+  if (origin !== 'https://trusted-website.com') {
+    ws.close(1008, 'Origin not allowed');
+  } else {
+    ws.send('Welcome to the secure WebSocket server!');
+  }
+});
+```
+
+**Important Notes:**
+
+- The **Origin** header is sent automatically by browsers when establishing a WebSocket connection.
+- Ensure that only trusted origins are allowed to connect to your WebSocket server to prevent malicious sites from interacting with your server.
+
+---
+
+### **3. CSRF Protection in WebSockets**
+
+While WebSockets are not directly vulnerable to **Cross-Site Request Forgery (CSRF)** attacks in the same way as HTTP requests, **authentication mechanisms** used with WebSockets can still be vulnerable.
+
+#### **Why WebSockets aren’t directly affected by CSRF:**
+
+- WebSocket connections are not triggered automatically by a third-party site (like how a `POST` request could be triggered in CSRF). The connection has to be explicitly initiated by the client using JavaScript.
+
+However, WebSockets can still be **vulnerable to unauthorized access** if the server doesn’t properly authenticate the client before allowing access to sensitive data or actions.
+
+#### **How to prevent unauthorized access:**
+
+- **Session Authentication**: Before opening the WebSocket connection, ensure the client is authenticated. This can be done via cookies, sessions, or token-based authentication (like JWT).
+- **Token Validation**: Ensure that the WebSocket connection is secured with an **access token** (like a **JWT**). This ensures that only authenticated users can connect to the WebSocket.
+
+---
+
+### **4. JWT (JSON Web Tokens) for WebSocket Authentication**
+
+**JWT** is commonly used for **stateless authentication** and is highly effective for securing WebSocket connections. You can send the JWT token during the WebSocket handshake to authenticate the client.
+
+#### **How to use JWT with WebSocket:**
+
+1. **Client-Side:**
+   - The client should include the JWT token in the WebSocket connection URL or as a **header** during the WebSocket handshake.
+   - If using a URL parameter:
+
+```javascript
+        const token = 'your-jwt-token-here';
+        const socket = new WebSocket(`wss://example.com/socket?token=${token}`);
+```
+
+2. **Server-Side:**
+   - On the server side, validate the JWT token when the WebSocket connection is being established. If the token is invalid, you can reject the connection.
+
+#### **Example (Node.js server using JWT):**
+
+```javascript
+const WebSocket = require('ws');
+const jwt = require('jsonwebtoken');
+const wss = new WebSocket.Server({ port: 8080 });
+
+wss.on('connection', (ws, req) => {
+  // Extract token from query parameters or headers
+  const url = new URL(req.url, `http://${req.headers.host}`);
+  const token = url.searchParams.get('token');  // Assume token is passed in URL
+
+  // Verify JWT token
+  jwt.verify(token, 'your-secret-key', (err, decoded) => {
+    if (err) {
+      ws.close(1008, 'Unauthorized');  // Close connection if invalid
+      return;
+    }
+
+    // Token is valid
+    ws.send('Connection authenticated!');
+  });
+});
+```
+
+#### **Benefits of JWT in WebSocket Authentication:**
+
+- **Stateless Authentication**: JWTs do not require server-side session storage, making them scalable.
+- **Security**: JWTs are signed and can be verified using a secret or public/private key pair, ensuring that the message hasn’t been tampered with.
+
+---
+
+### **5. Securing WebSocket Connections with SSL/TLS**
+
+WebSockets over **`wss://`** use **SSL/TLS encryption**, just like **HTTPS** for web pages. This ensures that all data exchanged between the client and server is encrypted, preventing **eavesdropping**, **tampering**, and **man-in-the-middle (MITM)** attacks.
+
+#### **Why SSL/TLS is crucial:**
+
+- **Confidentiality**: All data is encrypted, so even if someone intercepts the connection, they won’t be able to read the messages.
+
+- **Data Integrity**: SSL/TLS ensures that the data cannot be tampered with during transmission.
+
+- **Authentication**: The server is authenticated using an SSL/TLS certificate, which ensures the client is connecting to the intended server.
+
+#### **Configuring SSL/TLS for WebSocket (Node.js example):**
+
+```javascript
+const fs = require('fs');
+const https = require('https');
+const WebSocket = require('ws');
+
+const server = https.createServer({
+  cert: fs.readFileSync('server-cert.pem'),
+  key: fs.readFileSync('server-key.pem')
+});
+
+const wss = new WebSocket.Server({ server });
+
+wss.on('connection', function connection(ws) {
+  ws.send('Hello over secure WebSocket!');
+});
+
+server.listen(8080, () => {
+  console.log('Secure WebSocket server running on wss://localhost:8080');
+});
+```
+
+---
+
+### **6. Preventing WebSocket Hijacking and MITM Attacks**
+
+Since WebSockets can be open for long periods, it’s crucial to prevent **WebSocket hijacking** and **man-in-the-middle (MITM)** attacks. These attacks involve attackers intercepting or taking control of the WebSocket connection.
+
+#### Ways to mitigate hijacking and MITM attacks:
+
+1. **Always use `wss://`**: Never use `ws://` for production, as unencrypted WebSockets can be easily intercepted.
+
+2. **Authenticate before connection**: Ensure that the client is authenticated (e.g., using JWTs, OAuth tokens) before establishing the WebSocket connection.
+
+3. **Use Secure Cookies**: If using cookies for session management, ensure they are **Secure** and **HttpOnly** to prevent JavaScript access.
+
+4. **Verify Origin Header**: Ensure the `Origin` header sent by the client matches the allowed origin to prevent **Cross-Site WebSocket Hijacking (CSWSH)**.
+
+5. **Enable HSTS (HTTP Strict Transport Security)**: This forces clients to always connect using HTTPS (and therefore `wss://` for WebSockets) to prevent accidental unencrypted connections.
+
+---
+
+### **7. WebSocket Handshake and Headers for Authentication**
+
+The **WebSocket handshake** is the initial HTTP request that upgrades the connection to WebSocket. During the handshake, you can include authentication headers or tokens (like JWTs) to authenticate the client before the WebSocket connection is established.
+
+#### **Example of Authentication Header in Handshake:**
+
+```javascript
+const socket = new WebSocket('wss://example.com/socket');
+
+// Add JWT token to the headers if needed (for libraries like `ws` in Node.js)
+socket.onopen = function() {
+  console.log('WebSocket connection established');
+};
+```
+
+On the server side, you can check
+the headers (or URL parameters) to validate the authentication token before proceeding with the WebSocket connection.
