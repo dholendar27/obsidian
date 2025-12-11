@@ -1,16 +1,6 @@
 ---
 date created: 2025-12-11 17:38
 ---
-
-### Prisma Setup in Node.js / TypeScript
-
-#### Prerequisites:
-
-- Node.js installed.
-- A database (PostgreSQL, MySQL, SQLite, etc.) set up.
-
----
-
 ### Step 1: Install Dependencies
 
 1. **Initialize Node.js Project** (if not already done):
@@ -80,9 +70,10 @@ date created: 2025-12-11 17:38
      url      = env("DATABASE_URL")
    }
 
-   generator client {
-     provider = "prisma-client-js"
-   }
+   generator client { 
+	   provider = "prisma-client" 
+	   output = "../src/generated/prisma" 
+	}
 
    model User {
      id        Int      @id @default(autoincrement())
@@ -177,21 +168,21 @@ date created: 2025-12-11 17:38
      .finally(async () => {
        await prisma.$disconnect()
      });
-   ```
+```
 
 2. **Running TypeScript Code**:
 
    - Compile with TypeScript:
 
-     ```bash
+```bash
      npx tsc
-     ```
+```
 
    - Or use `ts-node` to run directly:
 
-     ```bash
+```bash
      npx ts-node index.ts
-     ```
+```
 
 ---
 
@@ -199,34 +190,25 @@ date created: 2025-12-11 17:38
 
 - **Migrate the database**:
 
-  ```bash
+```bash
   npx prisma migrate dev
-  ```
+```
 
 - **Generate Prisma Client**:
 
-  ```bash
+```bash
   npx prisma generate
-  ```
+```
 
 - **Introspect an existing database** (to generate the Prisma schema from an existing DB):
 
-  ```bash
+```bash
   npx prisma introspect
-  ```
+```
 
 - **View migrations status**:
 
-  ```bash
+```bash
   npx prisma migrate status
-  ```
+```
 
----
-
-### Notes:
-
-- **Database Provider**: Prisma supports PostgreSQL, MySQL, SQLite, and SQL Server. Make sure the provider in `schema.prisma` matches your database.
-
-- **Prisma Client**: Use the Prisma Client to interact with the database programmatically. It provides methods like `create`, `findMany`, `update`, and `delete`.
-
-- **Migrations**: When you modify your data models, run `npx prisma migrate dev` to apply the changes to your database.
